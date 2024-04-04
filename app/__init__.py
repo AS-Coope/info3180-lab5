@@ -9,4 +9,4 @@ migrate = Migrate(app, db)
 
 app.config.from_object(Config)
 
-from app import views
+from app import views, models
