@@ -34,7 +34,7 @@ def movies():
             app.config['UPLOAD_FOLDER'], postername
         ))
         return jsonify(message="Movie successfully added", title=title, poster = postername, description=description)
-    return form_errors(form)
+    return jsonify(form_errors(form))
 ###
 # The functions below should be applicable to all Flask apps.
 ###
