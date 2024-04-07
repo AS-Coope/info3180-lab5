@@ -18,28 +18,42 @@
 <script setup>
 //const props = defineProps(['movie'])
 //const emit = defineEmits(['edit', 'remove'])
-
-function saveMovie() {
-
-    let movieForm = document.getElementById('movieForm');
-    let form_data = new FormData(movieForm);
-    fetch("/api/v1/movies", { 
-        method: 'POST',
-        body: form_data
+    import {ref, onMounted} from "vue";
+    let csrf_token = ref("");
+    onMounted(()=>{
+        getCsrfToken();
     })
-    .then(response => { 
-            return response.json(); 
-    }) 
-    .then(data => { 
-        // display a success message 
-        console.log(data); 
-    }) 
-    .catch(error => { 
-        console.log(error); 
-    })
-}
+    function saveMovie() {
 
-function removeMovie() {
-    emit('remove')
-}
+        let movieForm = document.getElementById('movieForm');
+        let form_data = new FormData(movieForm);
+        fetch("/api/v1/movies", { 
+            method: 'POST',
+            body: form_data,
+            headers: {
+                'X-CSRFToken': csrf_token.value
+            }
+        })
+        .then(response => { 
+                return response.json(); 
+        }) 
+        .then(data => { 
+            // display a success message 
+            console.log(data); 
+        }) 
+        .catch(error => { 
+            console.log(error); 
+        })
+    }
+    function getCsrfToken() {
+        fetch('/api/v1/csrf-token')
+        .then((reponse) => reponse.json())
+        .then((data) => {
+            console.log(data);
+            csrf_token.value = data.csrf_token;
+        })
+        .catch(error => { 
+            console.log(error); 
+        })
+    }
 </script>
