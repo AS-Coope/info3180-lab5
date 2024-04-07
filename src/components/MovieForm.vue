@@ -20,8 +20,12 @@
 //const emit = defineEmits(['edit', 'remove'])
 
 function saveMovie() {
+
+    let movieForm = document.getElementById('movieForm');
+    let form_data = new FormData(movieForm);
     fetch("/api/v1/movies", { 
-        method: 'POST' 
+        method: 'POST',
+        body: form_data
     })
     .then(response => { 
             return response.json(); 
