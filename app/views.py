@@ -28,12 +28,13 @@ def movies():
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        poster = form.poster.data
+        post = form.poster.data
 
-        postername = secure_filename(poster.filename)
-        poster.save(os.path.join(
+        postername = secure_filename(post.filename)
+        post.save(os.path.join(
             app.config['UPLOAD_FOLDER'], postername
         ))
+        
         return jsonify(message="Movie successfully added", title=title, poster=postername, description=description)
     error_list = form_errors(form)
     return jsonify(errors = error_list)
