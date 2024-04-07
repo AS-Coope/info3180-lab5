@@ -21,7 +21,7 @@ import os
 def index():
     return jsonify(message="This is the beginning of our API")
 
-@app.route('/api/v1/movies', methods=["POST"])
+@app.route('/api/v1/movies', methods=['POST'])
 def movies():
      # Instantiate your form class
     form = MovieForm()
@@ -34,8 +34,9 @@ def movies():
         poster.save(os.path.join(
             app.config['UPLOAD_FOLDER'], postername
         ))
-        return jsonify(message="Movie successfully added", title=title, poster = postername, description=description)
-    return jsonify(form_errors(form))
+        return jsonify(message="Movie successfully added", title=title, poster=postername, description=description)
+    error_list = form_errors(form)
+    return jsonify(errors = error_list)
 
 @app.route('/api/v1/csrf-token', methods=['GET']) 
 def get_csrf(): 
