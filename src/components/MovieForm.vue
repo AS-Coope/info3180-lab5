@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="saveMovie">
+    <form @submit.prevent="saveMovie" method="post" enctype="multipart/form-data" id="movieForm">
         <div class="form-group mb-3">
             <label for="title" class="form-label">
                 Movie Title
@@ -9,6 +9,8 @@
                 Movie Description
             </label>
             <input type="textarea" name="description" class="form-control">
+            <input type="file" class="form-control"/>
+            <button type="submit" name="submit" class="btn btn-primary">Upload file</button>
         </div>
     </form>
 </template>
