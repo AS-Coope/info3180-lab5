@@ -5,12 +5,13 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app
+from app import app, db
 from flask import render_template, request, jsonify, send_file
 from app.forms import MovieForm
 from flask_wtf.csrf import generate_csrf
 from werkzeug.utils import secure_filename
 import os
+from app.models import Movies
 
 
 ###
@@ -34,8 +35,11 @@ def movies():
         post.save(os.path.join(
             app.config['UPLOAD_FOLDER'], postername
         ))
+        movie = Movies(title, description, postername)
         
-        return jsonify(message="Movie successfully added", title=title, poster=postername, description=description)
+        db.session.add(movie)
+        db.session.commit()
+        return jsonify({"message":"Movie successfully added", "title":title, "poster":postername, "description":description})
     error_list = form_errors(form)
     return jsonify(errors = error_list)
 
