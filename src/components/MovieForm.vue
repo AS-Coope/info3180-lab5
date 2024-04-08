@@ -8,8 +8,8 @@
             <label for="description" class="form-label">
                 Movie Description
             </label>
-            <input type="textarea" name="description" id="description" class="form-control">
-            <input type="file" class="form-control"/>
+            <textarea name="description" id="description" class="form-control"></textarea>
+            <input type="file" class="form-control" name="poster"/>
             <button type="submit" name="submit" class="btn btn-primary">Upload file</button>
         </div>
     </form>
@@ -20,6 +20,7 @@
 //const emit = defineEmits(['edit', 'remove'])
     import {ref, onMounted} from "vue";
     let csrf_token = ref("");
+    
     onMounted(()=>{
         getCsrfToken();
     })
@@ -27,13 +28,14 @@
 
         let movieForm = document.getElementById('movieForm');
         let form_data = new FormData(movieForm);
+        console.log(form_data.poster)
         fetch("/api/v1/movies", { 
             method: 'POST',
             body: form_data,
             headers: {
                 'X-CSRFToken': csrf_token.value
             }
-        })
+        }) 
         .then(function(response){ 
             return response.json(); 
         }) 
@@ -48,7 +50,7 @@
     }
     function getCsrfToken() {
         fetch('/api/v1/csrf-token')
-        .then((reponse) => reponse.json())
+        .then((response) => response.json())
         .then((data) => {
             console.log(data);
             csrf_token.value = data.csrf_token;
