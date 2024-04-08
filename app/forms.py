@@ -9,6 +9,6 @@ class MovieForm(FlaskForm):
     poster = FileField(
         'Movie Poster', validators=[
             FileRequired(),
-            FileAllowed(['jpg', 'png'], 'Images only!')
+            FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')
         ]
     )

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="saveMovie" method="post" enctype="multipart/form-data" id="movieForm">
+    <form @submit.prevent="saveMovie" id="movieForm">
         <div class="form-group mb-3">
             <label for="title" class="form-label">
                 Movie Title
@@ -34,14 +34,15 @@
                 'X-CSRFToken': csrf_token.value
             }
         })
-        .then(response => { 
-                return response.json(); 
+        .then(function(response){ 
+            return response.json(); 
         }) 
-        .then(data => { 
+        .then(function(data){ 
             // display a success message 
             console.log(data); 
+            //console.log("this runs");
         }) 
-        .catch(error => { 
+        .catch(function(error) { 
             console.log(error); 
         })
     }
